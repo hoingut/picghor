@@ -4,10 +4,6 @@
     {
       "src": "api/index.py",
       "use": "@vercel/python"
-    },
-    {
-      "src": "static/**",
-      "use": "@vercel/static"
     }
   ],
   "routes": [
@@ -23,9 +19,12 @@
       "src": "/static/(.*)",
       "dest": "/static/$1"
     },
+    // এই রাউটটি বাকি সব রিকোয়েস্ট হ্যান্ডেল করে
+    // যখন রিকোয়েস্ট আসে '/', তখন dest হয় '/'
+    // Vercel তখন রুট ফোল্ডারে index.html খোঁজে
     {
       "src": "/(.*)",
       "dest": "/$1"
     }
   ]
-}
+    }
