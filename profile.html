@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>আমার প্রোফাইল - ছবিঘর</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header>
+        <div class="logo"><a href="/" style="text-decoration: none; color: inherit;">ছবিঘর</a></div>
+        <nav>
+            <a href="/">হোম</a>
+            <a href="/upload.html">আপলোড</a>
+            <button id="logout-btn" style="background: transparent; border: none; cursor: pointer; color: #555;">লগআউট</button>
+        </nav>
+    </header>
+    <main>
+        <h1 id="welcome-message">লোড হচ্ছে...</h1>
+        <h2>আমার আপলোড করা ছবি</h2>
+        <div id="my-images" class="image-grid">
+            <!-- ইউজারের ছবি এখানে লোড হবে -->
+        </div>
+    </main>
+
+    <script type="module">
+        import { auth, db } from '/static/js/firebase-config.js';
+        import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+        import { collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+        const welcomeMessage = document.getElementById('welcome-message');
+        const myImagesGrid = document.getElementById('my-images');
+        const logoutBtn = document.getElementById('logout-btn');
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                welcomeMessage.textContent = `স্বাগতম, ${user.displayName || 'ব্যবহারকারী'}!`;
+
+                // Firestore থেকে এই ইউজারের আপলোড করা ছবিগুলো খুঁজুন
+                const q = query(collection(db, "images"), where("authorId", "==", user.uid));
+                const querySnapshot = await getDocs(q);
+                
+                myImagesGrid.innerHTML = '';
+                if (querySnapshot.empty) {
+                    myImagesGrid.innerHTML = '<p>আপনি এখনো কোনো ছবি আপলোড করেননি।</p>';
+                } else {
+                    querySnapshot.forEach((doc) => {
+                        const img = doc.data();
+                        const card = `
+                            <div class="image-card">
+                                <a href="/photo/${img.slug}">
+                                    <img src="${img.thumbUrl}" alt="${img.title}">
+                                    <p class="image-card-title">${img.title} (${img.approved ? 'অনুমোদিত' : 'বিবেচনাধীন'})</p>
+                                </a>
+                            </div>
+                        `;
+                        myImagesGrid.innerHTML += card;
+                    });
+                }
+
+            } else {
+                // যদি ইউজার লগইন করা না থাকে, তাকে লগইন পেজে পাঠান
+                window.location.href = '/auth.html';
+            }
+        });
+
+        logoutBtn.addEventListener('click', () => {
+            signOut(auth).then(() => {
+                window.location.href = '/';
+            });
+        });
+    </script>
+</body>
+</html>
