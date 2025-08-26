@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ছবি আপলোড করুন - ছবিঘর</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        .upload-form { max-width: 600px; margin: 2rem auto; padding: 2rem; background: #fff; border-radius: 8px; }
+        .upload-form input, .upload-form button { width: 100%; padding: 10px; margin-bottom: 1rem; box-sizing: border-box; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo"><a href="/" style="text-decoration: none; color: inherit;">ছবিঘর</a></div>
+        <nav>
+             <a href="/">হোম</a>
+             <a href="/profile.html">প্রোফাইল</a>
+        </nav>
+    </header>
+    <main>
+        <div id="login-prompt" class="upload-form">
+            <h1>ছবি আপলোড করতে লগইন করুন</h1>
+            <p><a href="/auth.html">লগইন করতে এখানে ক্লিক করুন।</a></p>
+        </div>
+
+        <form id="upload-form" class="upload-form hidden">
+            <h1>নতুন ছবি আপলোড করুন</h1>
+            <label for="title">ছবির শিরোনাম</label>
+            <input type="text" id="title" required>
+            
+            <label for="tags">ট্যাগ (কমা দিয়ে আলাদা করুন, যেমন: প্রকৃতি, আকাশ, সূর্য)</label>
+            <input type="text" id="tags" required>
+
+            <label for="image-file">ছবি ফাইল</label>
+            <input type="file" id="image-file" accept="image/*" required>
+
+            <button type="submit" id="submit-btn">আপলোড করুন</button>
+            <p id="upload-status"></p>
+        </form>
+    </main>
+
+    <script type="module">
+        import { auth } from '/static/js/firebase-config.js';
+        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+
+        const uploadForm = document.getElementById('upload-form');
+        const loginPrompt = document.getElementById('login-prompt');
+        const statusEl = document.getElementById('upload-status');
+        const submitBtn = document.getElementById('submit-btn');
+
+        let currentUser = null;
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                currentUser = user;
+                loginPrompt.classList.add('hidden');
+                uploadForm.classList.remove('hidden');
+            } else {
+                currentUser = null;
+                loginPrompt.classList.remove('hidden');
+                uploadForm.classList.add('hidden');
+            }
+        });
+
+        uploadForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!currentUser) {
+                statusEl.textContent = 'আপনাকে অবশ্যই লগইন করতে হবে।';
+                return;
+            }
+
+            const title = document.getElementById('title').value;
+            const tags = document.getElementById('tags').value;
+            const imageFile = document.getElementById('image-file').files[0];
+
+            if (!title || !tags || !imageFile) {
+                statusEl.textContent = 'অনুগ্রহ করে সব ঘর পূরণ করুন।';
+                return;
+            }
+
+            submitBtn.disabled = true;
+            statusEl.textContent = 'ছবি আপলোড হচ্ছে... অনুগ্রহ করে অপেক্ষা করুন।';
+
+            try {
+                // Firebase থেকে অথেনটিকেশন টোকেন নিন
+                const idToken = await currentUser.getIdToken(true);
+
+                const formData = new FormData();
+                formData.append('title', title);
+                formData.append('tags', tags);
+                formData.append('image', imageFile);
+
+                const response = await fetch('/api/upload', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${idToken}`
+                    },
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    statusEl.textContent = 'ছবি সফলভাবে আপলোড হয়েছে! অ্যাডমিন পর্যালোচনার পর এটি সাইটে দেখা যাবে।';
+                    uploadForm.reset();
+                } else {
+                    throw new Error(result.error || 'একটি অজানা সমস্যা হয়েছে।');
+                }
+            } catch (error) {
+                statusEl.textContent = `আপলোড ব্যর্থ হয়েছে: ${error.message}`;
+            } finally {
+                submitBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+      </html>
