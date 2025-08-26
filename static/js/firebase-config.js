@@ -4,15 +4,17 @@ import { getAuth } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.
 import { getFirestore } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
 
-// আপনার Firebase প্রজেক্টের কনফিগারেশন এখানে যুক্ত করুন
-const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
-};
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyBdOVGQ1y79k9ojVYvbMnjU0M-ZQMqvj0w",
+    authDomain: "picghor-345a1.firebaseapp.com",
+    projectId: "picghor-345a1",
+    storageBucket: "picghor-345a1.firebasestorage.app",
+    messagingSenderId: "397866625070",
+    appId: "1:397866625070:web:0906db7bd3e35a1fffd7bf"
+  };
+
+
 
 // Firebase অ্যাপ ইনিশিয়ালাইজ করুন
 const app = initializeApp(firebaseConfig);
