@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>লগইন বা সাইন আপ করুন</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        .auth-page {
+            max-width: 400px;
+            margin: 5rem auto;
+            padding: 2rem;
+            background: white;
+            text-align: center;
+            border-radius: 8px;
+        }
+        .google-btn {
+            background-color: #4285F4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo"><a href="/" style="text-decoration: none; color: inherit;">ছবিঘর</a></div>
+    </header>
+    <main class="auth-page">
+        <h1>আমাদের সাথে যোগ দিন</h1>
+        <p>আপনার গুগল একাউন্ট দিয়ে সহজেই লগইন বা সাইন আপ করুন।</p>
+        <button id="google-login-btn" class="google-btn">Google দিয়ে লগইন করুন</button>
+        <p id="auth-status" style="margin-top: 1rem;"></p>
+    </main>
+
+    <script type="module" src="/static/js/auth.js"></script>
+</body>
+      </html>
