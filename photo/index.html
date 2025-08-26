@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Meta ট্যাগগুলো JS দিয়ে পরিবর্তন করা হবে -->
+    <title>ছবি লোড হচ্ছে...</title>
+    <meta name="description" content="">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header>
+        <!-- হেডার অংশ index.html এর মতই হবে -->
+    </header>
+    <main id="image-detail-container">
+        <!-- ছবির বিস্তারিত তথ্য এখানে লোড হবে -->
+    </main>
+    <script type="module">
+        async function loadImageDetails() {
+            const slug = window.location.pathname.split('/').pop();
+            const container = document.getElementById('image-detail-container');
+
+            const response = await fetch(`/api/images/${slug}`);
+            if (!response.ok) {
+                container.innerHTML = '<h1>ছবি খুঁজে পাওয়া যায়নি।</h1>';
+                return;
+            }
+
+            const image = await response.json();
+
+            // Dynamic Meta Tags (SEO)
+            document.title = `${image.title} - বাংলা স্টক ফটো`;
+            document.querySelector('meta[name="description"]').setAttribute("content", `বিনামূল্যে ডাউনলোড করুন ${image.title}। ট্যাগ: ${image.tags.join(', ')}`);
+
+            container.innerHTML = `
+                <h1>${image.title}</h1>
+                <img src="${image.imageUrl}" alt="${image.title}" style="max-width: 100%; border-radius: 8px;">
+                <p>লেখক: ${image.authorName}</p>
+                <p>ট্যাগ: ${image.tags.join(', ')}</p>
+                <button onclick="window.open('${image.imageUrl}', '_blank')">ডাউনলোড</button>
+            `;
+        }
+
+        loadImageDetails();
+    </script>
+</body>
+  </html>
