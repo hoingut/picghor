@@ -3,6 +3,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase
 import { getAuth } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
+
 // আপনার Firebase প্রজেক্টের কনফিগারেশন এখানে যুক্ত করুন
 const firebaseConfig = {
   apiKey: "YOUR_API_KEY",
