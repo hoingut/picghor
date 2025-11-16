@@ -1,6 +1,0 @@
-Flask
-firebase-admin
-requests
-Pillow
-python-dotenv
-Flask-Cors
