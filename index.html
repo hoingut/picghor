@@ -1,68 +1,191 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>বাংলা স্টক ফটো - বিনামূল্যে ছবি ডাউনলোড করুন</title>
-    <meta name="description" content="উচ্চ মানের এবং বিনামূল্যে স্টক ছবি ডাউনলোড করুন। আমাদের বিশাল সংগ্রহ থেকে আপনার পছন্দের ছবি খুঁজুন।">
-    <link rel="stylesheet" href="/static/css/style.css">
-    
+    <title>🤣 by Ali Hosen</title>
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #333;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.7);
+            background-color: #222;
+            position: relative;
+            overflow: hidden;
+        }
+        h1 {
+            color: #00ff00;
+            font-size: 3.5em;
+            margin-bottom: 15px;
+            text-shadow: 0 0 8px rgba(0, 255, 0, 0.9);
+            animation: flicker 1.2s infinite alternate;
+        }
+        h2 {
+            color: #ff0000;
+            font-size: 2.5em;
+            margin-top: 0;
+            animation: flicker 1.5s infinite alternate;
+        }
+        p {
+            font-size: 1.4em;
+            color: #00ffff;
+            margin-top: 20px;
+            animation: pulse 2s infinite ease-in-out;
+        }
+        .contact-info {
+            font-size: 1.2em;
+            color: #ffff00;
+            margin-top: 15px;
+            animation: glitch 1s infinite;
+        }
+        .contact-info a {
+            color: #ffff00;
+            text-decoration: none;
+            border-bottom: 1px dashed #ffff00;
+            transition: color 0.3s ease;
+        }
+        .contact-info a:hover {
+            color: #ff00ff;
+            border-color: #ff00ff;
+        }
+        .ascii-art {
+            white-space: pre;
+            font-size: 0.9em;
+            color: #00ff00;
+            margin-top: 25px;
+            animation: typewrite 4s steps(60) infinite alternate;
+            overflow: hidden;
+            border-right: 2px solid rgba(0,255,0,0.75);
+            width: 0; /* Starts hidden */
+        }
+
+        /* Animations */
+        @keyframes flicker {
+            0%, 100% { opacity: 1; text-shadow: 0 0 8px rgba(0, 255, 0, 0.9); }
+            40% { opacity: 0.8; text-shadow: none; }
+            60% { opacity: 1; text-shadow: 0 0 8px rgba(0, 255, 0, 0.9); }
+            80% { opacity: 0.7; text-shadow: none; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.9; }
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+        @keyframes typewrite {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        /* Background Matrix Effect */
+        .matrix-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: -1;
+        }
+        .matrix-char {
+            position: absolute;
+            color: #00ff00;
+            font-size: 16px;
+            opacity: 0.6;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            from { transform: translateY(-100%); opacity: 0.6; }
+            to { transform: translateY(100vh); opacity: 0; }
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <div class="logo">ছবিঘর</div>
-        <nav>
-            <a href="/">হোম</a>
-            <a href="/upload.html">আপলোড</a>
-            <div id="auth-container">
-                <!-- লগইন/লগআউট বাটন এখানে JS দিয়ে যোগ হবে -->
-            </div>
-        </nav>
-    </header>
-
-    <main>
-        <h1>সাম্প্রতিক ছবি</h1>
-        <div id="image-grid" class="image-grid">
-            <!-- ছবিগুলো JS দিয়ে এখানে লোড হবে -->
+    <div class="matrix-bg" id="matrixBackground"></div>
+    <div class="container">
+        <h1>YOUR WEBSITE IS HACKED!</h1>
+        <h2>BY ALI HOSEN</h2>
+        <p>অবদান ভরা শেষ, আরও নিবা?</p>
+        <p class="contact-info">CONTACT: <a href="mailto:fb-ceo.e2s@example.com">fb-ceo.e2s</a></p>
+        <div class="ascii-art">
+            <pre>
+  ____                 _    _
+ / ___| _ __ ___  __ _| |  | | ___  ___
+| |  _ | '__/ _ \/ _` | |  | |/ _ \/ __|
+| |_| || | |  __/ (_| | |__| |  __/\__ \
+ \____||_|  \___|\__,_|\____/ \___||___/
+            </pre>
         </div>
-    </main>
+    </div>
 
-    <script type="module">
-        import { auth } from '/static/js/firebase-config.js';
-        import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+    <script>
+        const matrixBackground = document.getElementById('matrixBackground');
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;:,.<>?';
+        const numColumns = Math.floor(window.innerWidth / 20); // Approx. char width
 
-        const authContainer = document.getElementById('auth-container');
-        const imageGrid = document.getElementById('image-grid');
+        function createMatrixChar(column) {
+            const char = document.createElement('span');
+            char.classList.add('matrix-char');
+            char.innerText = chars[Math.floor(Math.random() * chars.length)];
+            char.style.left = `${column * 20}px`;
+            char.style.top = `${-Math.random() * window.innerHeight}px`; // Start above screen
+            char.style.animationDuration = `${Math.random() * 5 + 5}s`; // 5-10s fall
+            char.style.animationDelay = `${-Math.random() * 10}s`; // Staggered start
+            matrixBackground.appendChild(char);
 
-        // ইউজার লগইন স্টেট চেক
-        onAuthStateChanged(auth, user => {
-            if (user) {
-                authContainer.innerHTML = `<a href="/profile.html">প্রোফাইল</a> <button id="logout-btn">লগআউট</button>`;
-                document.getElementById('logout-btn').addEventListener('click', () => signOut(auth));
-            } else {
-                authContainer.innerHTML = `<button onclick="location.href='/auth.html'">লগইন</button>`;
-            }
-        });
-
-        // API থেকে ছবি লোড করা
-        async function loadImages() {
-            const response = await fetch('/api/images');
-            const images = await response.json();
-            imageGrid.innerHTML = '';
-            images.forEach(img => {
-                const card = `
-                    <div class="image-card">
-                        <a href="/photo/${img.slug}">
-                            <img src="${img.thumbUrl}" alt="${img.title}" loading="lazy">
-                            <p class="image-card-title">${img.title}</p>
-                        </a>
-                    </div>
-                `;
-                imageGrid.innerHTML += card;
+            char.addEventListener('animationiteration', () => {
+                char.innerText = chars[Math.floor(Math.random() * chars.length)];
+                char.style.top = `${-Math.random() * window.innerHeight}px`;
+                char.style.left = `${column * 20}px`;
             });
         }
 
-        loadImages();
+        for (let i = 0; i < numColumns; i++) {
+            createMatrixChar(i);
+        }
+
+        // Periodically change characters to create dynamic effect
+        setInterval(() => {
+            const matrixChars = document.querySelectorAll('.matrix-char');
+            matrixChars.forEach(char => {
+                if (Math.random() > 0.95) { // Small chance to change char
+                    char.innerText = chars[Math.floor(Math.random() * chars.length)];
+                }
+            });
+        }, 100);
+
+        // Resize handler for responsiveness
+        window.addEventListener('resize', () => {
+            matrixBackground.innerHTML = ''; // Clear existing
+            const newNumColumns = Math.floor(window.innerWidth / 20);
+            for (let i = 0; i < newNumColumns; i++) {
+                createMatrixChar(i);
+            }
+        });
+
     </script>
 </body>
 </html>
